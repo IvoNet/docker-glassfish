@@ -2,7 +2,6 @@ FROM eclipse-temurin:11-jdk-focal as builder
 
 ENV GLASSFISH_VERSION=6.2.5
 
-
 RUN apt-get update \
  && apt-get install --no-install-recommends -y wget unzip \
  && apt-get clean  \
@@ -17,13 +16,14 @@ RUN wget -q https://download.eclipse.org/ee4j/glassfish/glassfish-$GLASSFISH_VER
 FROM eclipse-temurin:11-jdk-focal
 
 LABEL maintainer="Ivo Woltring, ivonet.nl" description="Glassfish 6 Server Full"
+ARG PASSWORD
 ENV GLASSFISH_ARCHIVE glassfish
 ENV DOMAIN_NAME domain1
 ENV INSTALL_DIR /opt
 ENV GLASSFISH_HOME ${INSTALL_DIR}/glassfish6
 ENV DEPLOY_DIR ${GLASSFISH_HOME}/${GLASSFISH_ARCHIVE}/domains/${DOMAIN_NAME}/autodeploy
 ENV PATH="${GLASSFISH_HOME}/${GLASSFISH_ARCHIVE}/bin:$PATH"
-ENV AS_ADMIN_NEWPASSWORD secret
+ENV AS_ADMIN_NEWPASSWORD ${PASSWORD:-secret}
 ENV USR glassfish
 
 RUN useradd -b /opt -m -s /bin/sh -d ${GLASSFISH_HOME} ${USR} \

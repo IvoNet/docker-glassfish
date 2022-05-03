@@ -3,7 +3,11 @@
 if [[ -z $ADMIN_PASSWORD ]]; then
 	ADMIN_PASSWORD=$(cat /dev/urandom | base64 | tr -dc "a-zA-Z1-9" | fold -w 16 | head -n 1)
 	echo "################################################################"
-	echo "########## GENERATED ADMIN PASSWORD: $ADMIN_PASSWORD  ##########"
+	echo "########## GENERATED ADMIN PASSWORD: $ADMIN_PASSWORD ##########"
+	echo "################################################################"
+else
+	echo "################################################################"
+	echo "########### Using user defined admin password. #################"
 	echo "################################################################"
 fi
 asadmin start-domain -d

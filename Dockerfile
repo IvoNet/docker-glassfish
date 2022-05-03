@@ -32,26 +32,16 @@ RUN useradd -b /opt -m -s /bin/sh -d ${GLASSFISH_HOME} ${USR} \
 
 WORKDIR ${GLASSFISH_HOME}
 COPY --from=builder /opt/glassfish6 ${GLASSFISH_HOME}
+COPY entrypoint.sh /entrypoint.sh
 
-RUN chown -R ${USR}:${USR} ${GLASSFISH_HOME}
+RUN chown -R ${USR}:${USR} ${GLASSFISH_HOME} \
+ && chmod +x /entrypoint.sh
 
 USER ${USR}
-
-RUN asadmin start-domain -d \
- && echo "AS_ADMIN_PASSWORD=">pwd.txt \
- && echo "AS_ADMIN_NEWPASSWORD=${AS_ADMIN_NEWPASSWORD}">>pwd.txt \
- && cat pwd.txt \
- && asadmin --host localhost --port 4848 --user admin --passwordfile pwd.txt change-admin-password \
- && echo "AS_ADMIN_PASSWORD=${AS_ADMIN_NEWPASSWORD}">pwd.txt \
- && cat pwd.txt \
- && asadmin --host localhost --port 4848 --user admin --passwordfile pwd.txt enable-secure-admin \
- && asadmin --host localhost --port 4848 --user admin --passwordfile pwd.txt set configs.config.default-config.admin-service.jmx-connector.system.address=127.0.0.1 \
- && asadmin --host localhost --port 4848 --user admin --passwordfile pwd.txt set configs.config.default-config.admin-service.jmx-connector.system.security-enabled=false \
- && rm -f pwd.txt \
- && asadmin stop-domain
 
 VOLUME ["${DEPLOY_DIR}"]
 
 EXPOSE 8080 4848
 
-ENTRYPOINT ["asadmin", "start-domain", "--verbose"]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["asadmin", "start-domain", "--verbose"]

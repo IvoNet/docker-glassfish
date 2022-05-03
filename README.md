@@ -8,26 +8,24 @@ Glassfish docker image with admin panel enabled
 docker run \
   -d \
   --name glassfish \
+  -e ADMIN_PASSWORD=S3cr3t \
   -p 8080:8080 \
   -p 4848:4848 \
   ivonet/glassfish
 ```
+If you omit the ADMIN_PASSWORD line a password will be generated for you.
+You will see somthing like:
 
-Default (official build) `username/password` for the [admin](http://localhost:4848) panel is `admin/admin123`
-
+```shell
+################################################################
+########## GENERATED ADMIN PASSWORD: OtOCD2CS4lRdoelW  #########
+################################################################
+```
 
 ## Build
 
-Creator:
-
 ```shell
-make ARG="--build-arg PASSWORD=admin123" glassfish
-```
-
-User:
-
-```shell
-docker build [--build-arg PASSWORD=<GLASSFISH_ADMIN_PASSWORD_HERE>] -t [HANDLE/]<IMAGE>[:TAG] .
+docker build -t [HANDLE/]<IMAGE>[:TAG] .
 ```
 
 Basic:
@@ -35,5 +33,3 @@ Basic:
 ```shell
 docker build -t glassfish .
 ```
-
-if you do not provide `--build-arg PASSWORD=<GLASSFISH_ADMIN_PASSWORD_HERE>` in the build the username/password will be `admin/secret`

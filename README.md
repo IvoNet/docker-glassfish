@@ -4,10 +4,16 @@ Glassfish docker image with admin panel enabled
 
 # Exposed Ports
 
-| Port number | Description                                               |
-|:------------|:----------------------------------------------------------|
-| 8080        | internal address where the server runs                    |
-| 4848        | internal address where the admin panel can be accessed.   |
+| Port number | Description                               |
+|:------------|:------------------------------------------|
+| 8080        | HTTP port                                 |
+| 8181        | HTTPS port                                |
+| 4848        | Administration port                       |
+| 8686        | Pure JMX Clients Port                     |
+| 7676        | Message Queue Port                        |
+| 3700        | IIOP Port                                 |
+| 3820        | IIOP/SSL Port                             |
+| 3920        | IIOP/SSL Port With Mutual Authentication  |
 
 # Volumes
 

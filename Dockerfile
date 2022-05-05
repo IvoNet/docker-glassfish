@@ -39,6 +39,6 @@ RUN mkdir -p "${DEPLOY_DIR}" \
 USER ${USR}
 VOLUME ["${DEPLOY_DIR}"]
 
-EXPOSE 8080 4848
+EXPOSE 8080 4848 8181 8686 7676 3700 3820 3920
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["asadmin", "start-domain", "--verbose"]

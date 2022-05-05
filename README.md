@@ -41,7 +41,7 @@ docker run \
 ```
 
 If you omit the ADMIN_PASSWORD line a password will be generated for you.
-You will see somthing like:
+You will see something like:
 
 ```shell
 ################################################################
